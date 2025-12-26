@@ -1,4 +1,3 @@
-# student-management-system-backend
 # Student Management System – Backend
 
 ## Overview
