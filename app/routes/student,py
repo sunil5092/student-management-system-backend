@@ -5,6 +5,9 @@ from fastapi import Query
 from app.database import get_db
 from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentResponse
+from app.services.student_service import get_students as get_students_service
+from app.schemas.student import StudentListResponse
+
 
 router = APIRouter(prefix="/students", tags=["Students"])
 
@@ -32,20 +35,20 @@ def get_students(
 from fastapi import HTTPException
 
 
-@router.get("/", response_model=list[StudentResponse])
+@router.get("/", response_model=StudentListResponse)
 def get_students(
     db: Session = Depends(get_db),
-    skip: int = Query(0, ge=0),
-    limit: int = Query(10, ge=1, le=100),
+    skip: int = 0,
+    limit: int = 10,
     name: str | None = None
 ):
-    query = db.query(Student)
+    return get_students_service(
+        db=db,
+        skip=skip,
+        limit=limit,
+        name=name
+    )
 
-    if name:
-        query = query.filter(Student.name.ilike(f"%{name}%"))
-
-    students = query.offset(skip).limit(limit).all()
-    return students
 
 from app.schemas.student import StudentUpdate
 

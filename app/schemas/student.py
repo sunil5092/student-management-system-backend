@@ -16,3 +16,12 @@ class StudentResponse(BaseModel):
 class StudentUpdate(BaseModel):
     name: str | None = None
     email: EmailStr | None = None
+from typing import List
+
+
+class StudentListResponse(BaseModel):
+    total: int
+    items: List[StudentResponse]
+
+    class Config:
+        orm_mode = True
