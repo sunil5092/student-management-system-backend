@@ -13,3 +13,6 @@ class StudentResponse(BaseModel):
 
     class Config:
         orm_mode = True
+class StudentUpdate(BaseModel):
+    name: str | None = None
+    email: EmailStr | None = None
