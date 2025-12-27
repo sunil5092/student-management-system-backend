@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from app.database import engine
 from app.models import student
 from app.routes import student as student_routes
+from app.models import user
+
 
 student.Base.metadata.create_all(bind=engine)
 
