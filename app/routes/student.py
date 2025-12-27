@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from fastapi import Query
+from app.auth.dependencies import get_current_user
+
 
 from app.database import get_db
 from app.models.student import Student
@@ -13,7 +15,8 @@ router = APIRouter(prefix="/students", tags=["Students"])
 
 
 @router.post("/", response_model=StudentResponse)
-def create_student(student: StudentCreate, db: Session = Depends(get_db)):
+def create_student(student: StudentCreate, db: Session = Depends(get_db),current_user: str = Depends(get_current_user)
+):
     new_student = Student(
         name=student.name,
         email=student.email
@@ -27,7 +30,10 @@ def create_student(student: StudentCreate, db: Session = Depends(get_db)):
 def get_students(
     db: Session = Depends(get_db),
     skip: int = Query(0, ge=0),
-    limit: int = Query(10, ge=1, le=100)
+    limit: int = Query(10, ge=1, le=100),
+    current_user: str = Depends(get_current_user)
+
+    
 ):
     students = db.query(Student).offset(skip).limit(limit).all()
     return students
@@ -40,7 +46,9 @@ def get_students(
     db: Session = Depends(get_db),
     skip: int = 0,
     limit: int = 10,
-    name: str | None = None
+    name: str | None = None,
+    current_user: str = Depends(get_current_user)
+
 ):
     return get_students_service(
         db=db,
@@ -57,7 +65,9 @@ from app.schemas.student import StudentUpdate
 def update_student(
     student_id: int,
     student: StudentUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
+
 ):
     db_student = db.query(Student).filter(Student.id == student_id).first()
 
@@ -74,7 +84,8 @@ def update_student(
     return db_student
 
 @router.delete("/{student_id}")
-def delete_student(student_id: int, db: Session = Depends(get_db)):
+def delete_student(student_id: int, db: Session = Depends(get_db),current_user: str = Depends(get_current_user)
+):
     student = db.query(Student).filter(Student.id == student_id).first()
 
     if not student:
