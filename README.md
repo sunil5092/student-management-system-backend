@@ -1,5 +1,10 @@
 # Student Management System – Backend
 
+## Live Demo
+Swagger API Documentation:  
+https://student-management-system-backend-ttkh.onrender.com/docs
+
+
 ## Overview
 A backend REST API built using FastAPI and PostgreSQL to manage student records.  
 The system supports full CRUD operations with pagination, filtering, and clean service-layer architecture.
@@ -43,3 +48,4 @@ The system supports full CRUD operations with pagination, filtering, and clean s
 - Role-based access (Admin / Student)
 - Dockerization and deployment
 >>>>>>> 3f1527534b939b5c9042d02cbdd2e77dd4126374
+
