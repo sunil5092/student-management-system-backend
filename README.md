@@ -4,7 +4,10 @@
 A backend REST API built with FastAPI and PostgreSQL to manage student records, with JWT authentication.
 The system supports full CRUD operations with pagination, name filtering, and a clean service-layer architecture.
 
-**Deployment:** being moved to a new host — the live API docs link will be updated here when the redeploy is verified.
+## Live Demo
+- API: https://student-management-system-backend-two.vercel.app
+- Interactive docs (Swagger): https://student-management-system-backend-two.vercel.app/docs
+- Hosted on Vercel (serverless) with a Neon PostgreSQL database
 
 ## Tech Stack
 - Python
